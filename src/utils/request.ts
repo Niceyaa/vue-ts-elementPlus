@@ -1,6 +1,6 @@
 import Axios, {Method, ResponseType, AxiosResponse} from 'axios'
 import {ElMessageBox, ElMessage} from 'element-plus/lib/components'
-import store1,{useStore} from "vuex";
+import Store from '../store/index'
 import {getToken} from "./auth";
 import qs from 'qs'
 
@@ -21,9 +21,7 @@ const service = Axios.create({
     timeout: 15000
 })
 
-const store = useStore()
-console.log('request store1',store1)
-console.log('request store',store)
+console.log('request store',Store.state)
 
 service.interceptors.request.use(
     (config: any) => {
@@ -33,7 +31,7 @@ service.interceptors.request.use(
         try {
             const prmData = qs.parse(config.data)
             if (!prmData.noLoading) {
-                store.commit('SET_LOADING', true)
+                Store.commit('SET_LOADING', true)
             }
         }catch (e) {
             console.log(e)
@@ -47,7 +45,7 @@ service.interceptors.request.use(
 service.interceptors.response.use(
     response => response,
     error => {
-        // store().commit('SET_LOADING',false)
+        // Store().commit('SET_LOADING',false)
         // global?selfMsg.close():()=>{}
         if (error.code === 'ECONNABORTED' && error.message.indexOf('timeout') > -1) {
             ElMessage({
@@ -91,7 +89,7 @@ export default function request(arr: axiosData) {
                 }
              */
             const responseStatus = `${res.status}`
-            store.commit('SET_LOADING', false)
+            Store.commit('SET_LOADING', false)
             try {
                 if (!res.data.code) return res
             } catch {

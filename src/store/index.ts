@@ -5,7 +5,7 @@ import {setToken, removeToken, getToken} from "@/utils/auth";
 
 import {loginPwd, getUserInfo, loginOut, getUserVipInfo} from '@/api/user'
 
-export default createStore({
+const store =  createStore({
     state: {
         smdToken: null,
         userInfo: {},
@@ -153,6 +153,8 @@ export default createStore({
         }
     }
 })
+
+export default store
 
 
 
