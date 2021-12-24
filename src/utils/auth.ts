@@ -3,14 +3,14 @@ import Cookie from 'js-cookie'
 
 const tokenKey = 'smdToken'
 
-export function getToken<T>():T {
+export function getToken():string {
     return Cookie.get(tokenKey)
 }
 
-export function setToken(token:string){
+export function setToken(token:string):boolean{
     return Cookie.set(tokenKey,token,{'expires':30})
 }
 
-export function removeToken(){
+export function removeToken():boolean{
     return Cookie.remove(tokenKey)
 }

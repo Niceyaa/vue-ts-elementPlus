@@ -11,6 +11,11 @@ import "element-plus/dist/index.css"
 
 const app = createApp(App)
 
+import commonComponents from './components/common'
+commonComponents.forEach(item=>{
+    app.component(item.name,item.component)
+})
+
 app.use(ElementPlus)
 
 app.use(store).use(router).mount('#app')

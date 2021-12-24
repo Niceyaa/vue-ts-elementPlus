@@ -1,7 +1,7 @@
 <template>
     <div class="home-container">
-        <!--<div class="home-header">
-            &lt;!&ndash;<common-nav-header></common-nav-header>&ndash;&gt;
+        <div class="home-header">
+            <common-nav-header></common-nav-header>
         </div>
         <div class="intro-content" ref="introContent">
             <div class="inner-intro-wrapper">
@@ -13,7 +13,7 @@
                 <img src="@/assets/newIndex/nav_display.png" alt="">
             </div>
         </div>
-        <div class="banner-wrapper">
+        <!--<div class="banner-wrapper">
             <el-carousel :autoplay="auto" :interval="4000" class="suggest-banner" arrow="always"
                          indicator-position="none">
                 <el-carousel-item v-for="(item,idx) in hotTemplateData" :key="idx">
@@ -51,16 +51,16 @@
                     </div>
                 </el-carousel-item>
             </el-carousel>
-        </div>
+        </div>-->
         <div class="search-wrapper">
             <div class="search-title">在10万+模板中快速搜索</div>
             <el-input class="search-input" v-model.trim="searchKeyword" placeholder="请输入模板关键词">
-                &lt;!&ndash;<i #prefix class="el-input__icon el-icon-search"></i>&ndash;&gt;
+                <!--<i #prefix class="el-input__icon el-icon-search"></i>-->
                 <template #append>
                     <div @click="goToURL" class="search-btn">搜索模板</div>
                 </template>
             </el-input>
-            <div v-if="hotTags.length!==0" class="hot-wrapper">
+           <!-- <div v-if="hotTags.length!==0" class="hot-wrapper">
                 <div class="hot-title">
                     <img src="@/assets/newIndex/home_hot@2x.png" alt="">
                     <span>热门推荐：</span>
@@ -68,18 +68,18 @@
                 <nuxt-link class="hot-search-item" v-for="item in hotTags" :key="item.id"
                            :to="'/sysTemplate/1?label='+item.id">{{item.name}}
                 </nuxt-link>
-            </div>
+            </div>-->
         </div>
         <div class="template-lib-show">
             <div class="show-title">大家都在用</div>
-            <div class="big-classify">
+            <!--<div class="big-classify">
                 <div @click="changeIndustryId(item.industryId)"
                      :class="{'big-classify-item':true,'classifyActive':item.industryId===currentIndustryId}"
                      v-for="item in industryData" :key="item.industryId">{{item.industryName}}
                 </div>
-            </div>
-            &lt;!&ndash;<div v-if="totalTemplateData.length>0">&ndash;&gt;
-            &lt;!&ndash;<div class="template-content" v-for="item in totalTemplateData" :key="item.industryId"
+            </div>-->
+            <!--<div v-if="totalTemplateData.length>0">-->
+            <!--<div class="template-content" v-for="item in totalTemplateData" :key="item.industryId"
                  v-if="item.industryId===currentIndustryId">
                 &lt;!&ndash;<div class="template-content">&ndash;&gt;
                 &lt;!&ndash;<nuxt-link target="_blank" :to="'/sysTemplate/detail/'+innerItem.templateId" v-for="innerItem in item.industryData" :key="innerItem.templateId" class="template-item">&ndash;&gt;
@@ -114,10 +114,10 @@
                     </div>
                     <img class="template-rb-icon" src="@/assets/newIndex/template_bj.png" alt="">
                 </div>
-            </div>&ndash;&gt;
-            &lt;!&ndash;</div>
+            </div>-->
+            <!--</div>
 
-            <empty-data-page v-else></empty-data-page>&ndash;&gt;
+            <empty-data-page v-else></empty-data-page>-->
             <router-link class="show-more-template" to="/sysTemplate/1">查看更多模板</router-link>
         </div>
         <div class="special-function">
@@ -145,7 +145,7 @@
             </div>
 
         </div>
-        <div class="comment-content">
+        <!--<div class="comment-content">
             <div class="comment-title">他们这样评价云标书</div>
             <el-carousel :autoplay="true" :interval="4000" class="comment-banner" indicator-position="none"
                          arrow="always">
@@ -165,8 +165,8 @@
                     </div>
                 </el-carousel-item>
             </el-carousel>
-        </div>
-        <div class="cooperation-partner">
+        </div>-->
+      <!--  <div class="cooperation-partner">
             <div class="cooperation-title">拥抱合作，持续创新</div>
             <div class="cooperation-content">
                 <div class="img-box" v-for="(item,idx) in partnerSrc" :key="idx">
@@ -175,8 +175,8 @@
                 </div>
 
             </div>
-        </div>
-        <successShow :show-flag="showFlag">
+        </div>-->
+        <!--<successShow :show-flag="showFlag">
           <div style="text-align: center">创建成功，可前往
             <nuxt-link :to="editUrl" style="color: #156BFE;text-decoration: none">编辑</nuxt-link>
             或
@@ -194,7 +194,7 @@
     // import qs from 'qs'
     // import emptyDataPage from '@/components/emptyDataPage'
     // import successShow from '@/components/successShow'
-    /*import c1 from '../assets/other/c1.png'
+    import c1 from '../assets/other/c1.png'
     import c2 from '../assets/other/c2.png'
     import c3 from '../assets/other/c3.png'
     import c01 from '../assets/other/01.png'
@@ -211,14 +211,14 @@
     import c12 from '../assets/other/12.png'
     import c13 from '../assets/other/13.png'
     import c14 from '../assets/other/14.png'
-    import c15 from '../assets/other/15.png'*/
+    import c15 from '../assets/other/15.png'
     // import {mapState} from 'vuex'
 
     import {defineComponent, ref, reactive} from 'vue'
 
     export default defineComponent({
         setup() {
-            /*let showFlag = ref(false);
+            let showFlag = ref(false);
             let editUrl: string;
             let partnerSrc = [c01, c02, c03, c04, c05, c06, c07, c08, c09, c10, c11, c12, c13, c14, c15];
             let hotTemplateData = reactive([])
@@ -264,7 +264,6 @@
             let sysTempPageSize = 20
             return {
                 showFlag,
-                editUrl,
                 partnerSrc,
                 hotTemplateData,
                 searchKeyword,
@@ -275,7 +274,7 @@
                 functionId,
                 currentIndustryId,
                 sysTempPageSize
-            }*/
+            }
         }
     })
 

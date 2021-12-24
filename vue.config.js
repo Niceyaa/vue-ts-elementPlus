@@ -24,7 +24,7 @@ module.exports = {
             patterns: [path.resolve(__dirname, "./src/styles/common.less")]
         }
     },
-    lintOnSave: true,
+    lintOnSave: false,
     devServer: {
         overlay: {
             warnings: true,
