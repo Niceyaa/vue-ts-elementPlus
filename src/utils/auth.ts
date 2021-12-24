@@ -3,11 +3,11 @@ import Cookie from 'js-cookie'
 
 const tokenKey = 'smdToken'
 
-export function getToken() {
+export function getToken<T>():T {
     return Cookie.get(tokenKey)
 }
 
-export function setToken(token:any){
+export function setToken(token:string){
     return Cookie.set(tokenKey,token,{'expires':30})
 }
 

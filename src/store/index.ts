@@ -1,9 +1,9 @@
 import {createStore} from 'vuex'
 import qs from 'qs'
 
-import {setToken, removeToken, getToken} from "@/utils/auth";
+import {setToken, removeToken} from "@/utils/auth";
 
-import {loginPwd, getUserInfo, loginOut, getUserVipInfo} from '@/api/user'
+import {loginPwd, loginOut} from '@/api/user'
 
 const store =  createStore({
     state: {

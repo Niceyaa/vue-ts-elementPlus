@@ -21,7 +21,7 @@ const service = Axios.create({
     timeout: 15000
 })
 
-console.log('request store',Store.state)
+console.log('request store',Store)
 
 service.interceptors.request.use(
     (config: any) => {
