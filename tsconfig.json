@@ -9,7 +9,7 @@
     "skipLibCheck": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
-    "noImplicitAny": false,
+    "noImplicitAny": true,
     "allowJs": true,
     "sourceMap": true,
     "baseUrl": ".",

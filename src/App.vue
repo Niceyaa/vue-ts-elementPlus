@@ -1,6 +1,18 @@
 <template>
-    <router-view/>
+    <router-view v-slot="{Component}">
+        <component :is="Component"></component>
+    </router-view>
+    <login-com></login-com>
 </template>
+<script lang="ts">
+    import loginCom from './components/loginCom.vue'
+    import {defineComponent} from 'vue'
+    export default defineComponent({
+        components: {
+            'login-com':loginCom
+        }
+    })
+</script>
 
 <style lang="less">
     .user-popper-info {

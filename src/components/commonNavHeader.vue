@@ -27,7 +27,7 @@
             <router-link v-if="!store.state.userVipInfo.memberFlag" to="/vip" class="to-vip-icon">
                 <img src="../assets/newIndex/nav_vip@2x.png" alt="">
             </router-link>
-            <div v-if="!store.state.userInfo.userNick" class="logged-wrapper">
+            <div v-if="store.state.userInfo.userNick" class="logged-wrapper">
                 <router-link to="/personalCenter/personalCenter/personalInfo" class="to-work-icon">进入工作区</router-link>
                 <el-popover
                         popper-class="user-popper-info"
@@ -134,7 +134,7 @@
             }
 
             // 点击登录事件
-            function openLoginModal(type:string):void {
+            function openLoginModal(type:string|null=null):void {
                 store.commit("SET_LOGIN_MODULE", type)
                 store.commit("SET_LOGIN", true)
             }
