@@ -72,4 +72,13 @@ export function getHotTemplateDate(data){
     })
 }
 
+//首页模板
+export function getTemplateList(data){
+    return request({
+        url: '/smartbiddoc-material/api/template/apiQueryTemplatePage',
+        method: 'post',
+        data
+    })
+}
+
 

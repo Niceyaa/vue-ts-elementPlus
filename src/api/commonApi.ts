@@ -45,3 +45,21 @@ export function deletePicByFileId(data){
     })
 }
 
+//获取特色数据
+export function getSpecialFodderAndTemplate(data){
+    return request({
+        url: '/smartbiddoc-material/api/popularRecommend/apiQueryPopularTemMat',
+        method: 'post',
+        data
+    })
+}
+
+//获取底部信息
+export function getBtmInfo(data){
+    return request({
+        url: '/smartbiddoc-pubResource/api/article/apiQueryBottomList',
+        method: 'post',
+        data
+    })
+}
+

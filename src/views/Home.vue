@@ -50,12 +50,12 @@
                   </template>
                 </el-image>
                 <div class="opt-wrapper">
-                  <nuxt-link
+                  <router-link
                     target="_blank"
                     :to="'/sysTemplate/detail/' + innerItem.templateId"
                     class="preview-btn"
                     >预览
-                  </nuxt-link>
+                  </router-link>
                   <div
                     @click="createDocByTemplateId(innerItem)"
                     class="create-by-id"
@@ -94,32 +94,22 @@
                     <img src="@/assets/newIndex/home_hot@2x.png" alt="">
                     <span>热门推荐：</span>
                 </div>
-                <nuxt-link class="hot-search-item" v-for="item in hotTags" :key="item.id"
+                <router-link class="hot-search-item" v-for="item in hotTags" :key="item.id"
                            :to="'/sysTemplate/1?label='+item.id">{{item.name}}
-                </nuxt-link>
+                </router-link>
             </div>-->
     </div>
     <div class="template-lib-show">
-      <div class="show-title">大家都在用</div>
-      <div class="big-classify">
-        <div
-          @click="changeIndustryId(item.industryId)"
-          :class="{
-            'big-classify-item': true,
-            classifyActive: item.industryId === currentIndustryId,
-          }"
-          v-for="item in industryData"
-          :key="item.industryId"
-        >
-          {{ item.industryName }}
-        </div>
-      </div>
-      <!-- <div v-if="totalTemplateData.length>0">
-      <div class="template-content" v-for="item in totalTemplateData" :key="item.industryId"
-                 v-if="item.industryId===currentIndustryId">
-                &lt;!&ndash;<div class="template-content">&ndash;&gt;
-                &lt;!&ndash;<nuxt-link target="_blank" :to="'/sysTemplate/detail/'+innerItem.templateId" v-for="innerItem in item.industryData" :key="innerItem.templateId" class="template-item">&ndash;&gt;
-                <div :to="'/sysTemplate/detail/'+innerItem.templateId" v-for="innerItem in item.industryData"
+            <div class="show-title">大家都在用</div>
+            <div class="big-classify">
+                <div @click="changeIndustryId(item.industryId)"
+                     :class="{'big-classify-item':true,'classifyActive':item.industryId===currentIndustryId}"
+                     v-for="item in industryData" :key="item.industryId">{{item.industryName}}
+                </div>
+            </div>
+            <!--<div v-if="totalTemplateData.length>0">-->
+            <div class="template-content">
+                <div :to="'/sysTemplate/detail/'+innerItem.templateId" v-for="innerItem in showTemplateList"
                      :key="innerItem.templateId" class="template-item">
                     <div class="show-inner">
                         <div class="inner-title">
@@ -129,17 +119,14 @@
                         <div class="inner-desc">word格式/A4打印/内容随意修改</div>
 
                         <el-image class="file-cover" :src="innerItem.fileCoverUrl" alt="封面加载失败">
-                            <template #error>
-                                <div class="image-slot">
-                                    <img src="@/assets/newIndex/defaultShowIcon.png" alt="">
-                                </div>
+                            <template #error class="image-slot">
+                                <img src="@/assets/newIndex/defaultShowIcon.png" alt="">
                             </template>
-
                         </el-image>
                         <div class="opt-wrapper">
-                            <nuxt-link target="_blank" :to="'/sysTemplate/detail/'+innerItem.templateId"
+                            <router-link target="_blank" :to="'/sysTemplate/detail/'+innerItem.templateId"
                                        class="preview-btn">预览
-                            </nuxt-link>
+                            </router-link>
                             <div @click="createDocByTemplateId(innerItem)" class="create-by-id">依模板创建标书</div>
                         </div>
                     </div>
@@ -151,13 +138,11 @@
                     <img class="template-rb-icon" src="@/assets/newIndex/template_bj.png" alt="">
                 </div>
             </div>
-      </div>
+            <!--</div>
 
-        <empty-data-page v-else></empty-data-page> -->
-      <router-link class="show-more-template" to="/sysTemplate/1"
-        >查看更多模板</router-link
-      >
-    </div>
+            <empty-data-page v-else></empty-data-page>-->
+            <router-link class="show-more-template" to="/sysTemplate/1">查看更多模板</router-link>
+        </div>
     <div class="special-function">
       <div class="spec-func-inner">
         <div class="spec-func-title">更多特色功能，助力高效工作</div>
@@ -216,7 +201,7 @@
         </div>
       </div>
     </div>
-    <!--<div class="comment-content">
+    <div class="comment-content">
             <div class="comment-title">他们这样评价云标书</div>
             <el-carousel :autoplay="true" :interval="4000" class="comment-banner" indicator-position="none"
                          arrow="always">
@@ -236,8 +221,8 @@
                     </div>
                 </el-carousel-item>
             </el-carousel>
-        </div>-->
-    <!--  <div class="cooperation-partner">
+        </div>
+     <div class="cooperation-partner">
             <div class="cooperation-title">拥抱合作，持续创新</div>
             <div class="cooperation-content">
                 <div class="img-box" v-for="(item,idx) in partnerSrc" :key="idx">
@@ -246,18 +231,18 @@
                 </div>
 
             </div>
-        </div>-->
+        </div>
     <!--<successShow :show-flag="showFlag">
           <div style="text-align: center">创建成功，可前往
-            <nuxt-link :to="editUrl" style="color: #156BFE;text-decoration: none">编辑</nuxt-link>
+            <router-link :to="editUrl" style="color: #156BFE;text-decoration: none">编辑</router-link>
             或
-            <nuxt-link to="/personalCenter/personalCenter/myBidDoc" style="color: #156BFE;text-decoration: none">
+            <router-link to="/personalCenter/personalCenter/myBidDoc" style="color: #156BFE;text-decoration: none">
               工作区
-            </nuxt-link>
+            </router-link>
             查看
           </div>
         </successShow>-->
-    <!--<common-footer></common-footer>-->
+    <common-footer></common-footer>
     <!--<el-backtop></el-backtop>-->
   </div>
 </template>
@@ -311,7 +296,6 @@ export default defineComponent({
       c15,
     ];
     let searchKeyword = ref("");
-    let totalTemplateData = reactive([]);
     let functionData = [
       {
         id: 1,
@@ -368,22 +352,27 @@ export default defineComponent({
           "云标书丰富的模板及统一管理上传公司素材,一次上传可以多次重复使用，节约了很多时间，出错的概率也减少了。多人协同制作功能非常实用。",
       },
     ];
-    let functionId = ref(1);
-    let currentIndustryId = ref(null);
     let sysTempPageSize = 20;
 
     let {
       hotTemplate: hotTemplateData,
       showTemplateData,
+      showTemplateList,
       industryData,
+      functionId,
+      changeIndustryId,
+      changeFunction,
+      totalTemplate: totalTemplateData,
+      currentIndustryId,
     } = homeApiData();
-    console.log("热门模板", hotTemplateData, showTemplateData, industryData);
+    console.log("热门模板", hotTemplateData, showTemplateData, industryData,totalTemplateData);
 
     return {
       showFlag,
       showTemplateData,
       partnerSrc,
       hotTemplateData,
+      showTemplateList,
       searchKeyword,
       industryData,
       totalTemplateData,
@@ -392,6 +381,8 @@ export default defineComponent({
       functionId,
       currentIndustryId,
       sysTempPageSize,
+      changeIndustryId,
+      changeFunction
     };
   },
 });

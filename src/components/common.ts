@@ -1,17 +1,20 @@
 // 公共组件
 import commonNavHeader from '@/components/commonNavHeader.vue'
+import commonFooter from '@/components/commonFooter.vue'
 
-type comArr = [
-    {
+type commonItem = {
         name: string,
         component?: any
-    }
-    ]
+}
 
-const commonComponents:comArr = [
+const commonComponents:Array<commonItem> = [
     {
         name: 'common-nav-header',
         component: commonNavHeader
+    },
+    {
+        name:'common-footer',
+        component: commonFooter
     }
 ]
 

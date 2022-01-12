@@ -4,7 +4,7 @@ import qs from 'qs'
 import { setToken, removeToken } from "@/utils/auth";
 
 import { loginPwd, loginOut, getUserInfo, getUserVipInfo } from '@/api/user'
-import { getIndustryList } from '@/api/commonApi';
+import { getIndustryList,getBtmInfo,getSpecialFodderAndTemplate } from '@/api/commonApi';
 
 import type {State} from '../type/store.d'
 
@@ -88,19 +88,26 @@ const store = createStore({
         /*async getHotTagList({commit}) {
           let content = await this.$axios.post('/smartbiddoc-material/api/popularRecommend/apiQueryPopularLabel')
           commit('SET_HOT_TAGS', content.data.result)
-        },
+        },*/
         async getBtmNavInfo({commit}) {
-          const content = await this.$axios.post('/smartbiddoc-pubResource/api/article/apiQueryBottomList')
+          const content = await getBtmInfo({})
           commit('SET_BTM_INFO', content.data.result)
         },
         async getSpecialTempFodder({commit}) {
-          const content = await this.$axios.post('/smartbiddoc-material/api/popularRecommend/apiQueryPopularTemMat')
+          const content = await getSpecialFodderAndTemplate({})
           commit('SET_SPECIAL_INFO', content.data.result)
-        },*/
+        },
         getIndustryList({commit}) {
             getIndustryList({}).then(res=>{
                 if(res.data.code===200){
-                    commit('SET_INDUSTRY_DATA', res.data.result)
+                    let ins = res.data.result
+                    if(ins.length>0){
+                        ins.unshift({
+                            industryId:0,
+                            industryName:'全部分类'
+                        })
+                    }
+                    commit('SET_INDUSTRY_DATA', ins)
                 }
             })
         },
