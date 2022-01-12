@@ -63,4 +63,13 @@ export function sortApi(data){
     })
 }
 
+//热门模板
+export function getHotTemplateDate(data){
+    return request({
+        url: '/smartbiddoc-material/api/commonResource/apiQueryHomePageHotTemplate',
+        method: 'get',
+        params:data
+    })
+}
+
 

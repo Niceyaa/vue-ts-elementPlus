@@ -53,11 +53,11 @@
           <!--密码登录-->
           <div v-if="loginWay === 'pwdLogin'" class="pwd-login-part">
             <div class="part-name">密码登录</div>
-            <el-form ref="pwdForm" :model="form" :rules="rules">
+            <el-form ref="pwdLoginForm" :model="form" :rules="rules">
               <el-form-item prop="tel">
                 <el-input
                   v-model="form.tel"
-                  autocomplete="off"
+                  :autocomplete="true"
                   placeholder="请输入手机号"
                 ></el-input>
               </el-form-item>
@@ -67,7 +67,7 @@
                   type="password"
                   autocomplete="off"
                   placeholder="请输入密码"
-                  @keydown.enter.native="loginHandle('pwdForm')"
+                  @keydown.enter="loginHandle('pwdForm')"
                 ></el-input>
               </el-form-item>
               <el-form-item>
@@ -89,7 +89,7 @@
                   :disabled="loginFlag"
                   class="login-btn"
                   type="primary"
-                  @click="loginHandle('pwdForm')"
+                  @click="loginHandle(pwdLoginForm)"
                   >登录
                 </el-button>
               </el-form-item>
@@ -114,10 +114,10 @@
           <div v-if="loginWay === 'codeLogin'" class="pwd-login-part">
             <div class="part-name">验证码登录</div>
             <el-form
-              ref="form"
+              ref="codeLoginForm"
               :model="form"
               :rules="rules"
-              @submit.native.prevent
+              @submit.prevent
             >
               <el-form-item prop="tel">
                 <el-input
@@ -129,7 +129,7 @@
               <el-form-item prop="code">
                 <div class="validate-code-wrapper">
                   <el-input
-                    @keydown.enter.native="loginHandle('form')"
+                    @keydown.enter="loginHandle(codeLoginForm)"
                     v-model="form.code"
                     maxlength="4"
                     minlength="4"
@@ -137,7 +137,7 @@
                     placeholder="请输入验证码"
                   ></el-input>
                   <div
-                    @click="sendValidateCode('form')"
+                    @click="sendValidateCode(codeLoginForm)"
                     :class="{ 'code-btn': true, isSend: sendFlag }"
                   >
                     {{ validatorText }}
@@ -156,7 +156,7 @@
                   :disabled="loginFlag"
                   class="login-btn"
                   type="primary"
-                  @click="loginHandle('form')"
+                  @click="loginHandle(codeLoginForm)"
                   >登录
                 </el-button>
               </el-form-item>
@@ -206,7 +206,7 @@
           <!--忘记密码-->
           <div v-if="loginWay === 'forgetPwd'" class="pwd-login-part">
             <div class="part-name">忘记密码</div>
-            <el-form :model="form" :rules="rules" ref="form">
+            <el-form :model="form" :rules="rules" ref="forgetPwdForm">
               <el-form-item prop="tel">
                 <el-input
                   v-model="form.tel"
@@ -214,7 +214,7 @@
                   placeholder="请输入手机号"
                 ></el-input>
               </el-form-item>
-              <el-form-item>
+              <el-form-item prop="code">
                 <div class="validate-code-wrapper">
                   <el-input
                     v-model="form.code"
@@ -224,7 +224,7 @@
                     placeholder="请输入验证码"
                   ></el-input>
                   <div
-                    @click="sendForPwdValidateCode('form')"
+                    @click="sendForPwdValidateCode(forgetPwdForm)"
                     :class="{ 'code-btn': true, isSend: sendForPwdFlag }"
                   >
                     {{ validatorForPwdText }}
@@ -233,7 +233,7 @@
               </el-form-item>
               <el-form-item>
                 <el-input
-                  @keydown.enter.native="forPwdHandle('form')"
+                  @keydown.enter="forPwdHandle(forgetPwdForm)"
                   type="password"
                   v-model="form.password"
                   autocomplete="off"
@@ -249,7 +249,7 @@
                 <el-button
                   :loading="forPwdFlag"
                   :disabled="forPwdFlag"
-                  @click="forPwdHandle('form')"
+                  @click="forPwdHandle(forgetPwdForm)"
                   class="login-btn"
                   type="primary"
                   >确定
@@ -260,7 +260,7 @@
           <!--注册-->
           <div v-if="loginWay === 'register'" class="pwd-login-part">
             <div class="part-name">手机号注册</div>
-            <el-form :model="form" :rules="rules" ref="form">
+            <el-form :model="form" :rules="rules" ref="refisterForm">
               <el-form-item prop="tel">
                 <el-input
                   v-model="form.tel"
@@ -268,7 +268,7 @@
                   placeholder="请输入手机号"
                 ></el-input>
               </el-form-item>
-              <el-form-item>
+              <el-form-item prop="code">
                 <div class="validate-code-wrapper">
                   <el-input
                     v-model="form.code"
@@ -278,7 +278,7 @@
                     placeholder="请输入验证码"
                   ></el-input>
                   <div
-                    @click="sendRegisterValidateCode('form')"
+                    @click="sendRegisterValidateCode(refisterForm)"
                     :class="{ 'code-btn': true, isSend: sendRegisterFlag }"
                   >
                     {{ validatorRegisterText }}
@@ -287,7 +287,7 @@
               </el-form-item>
               <el-form-item>
                 <el-input
-                  @keydown.enter.native="registerHandle('form')"
+                  @keydown.enter="registerHandle(refisterForm)"
                   type="password"
                   v-model="form.password"
                   autocomplete="off"
@@ -303,7 +303,7 @@
                 <el-button
                   :loading="registerFlag"
                   :disabled="registerFlag"
-                  @click="registerHandle('form')"
+                  @click="registerHandle(refisterForm)"
                   class="login-btn"
                   type="primary"
                   >注册
@@ -350,112 +350,15 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, reactive, toRefs, watch } from "vue";
-import { useStore } from "vuex";
-import { webLoginAppId, webCodeAppId } from "../setting";
+import { defineComponent, onMounted } from "vue";
+import loginHook from "../hooks/components/login";
 
 export default defineComponent({
   name: "loginCom",
   setup() {
-    let store = useStore();
-    console.log("登录弹窗---store", store.state.loginFlag);
-    // smsType 短信类型,1-验证码登录 2-找回登录密码 3-用户注册
-    let loginStatusFlag = ref(false);
-
-    let sendForPwdFlag = ref(false);
-    let forPwdFlag = ref(false);
-    let validatorForPwdText = ref("获取验证码");
-
-    let sendRegisterFlag = ref(false);
-    let registerFlag = ref(false);
-    let validatorRegisterText = ref("获取验证码");
-
-    let sendFlag = ref(false);
-    let loginFlag = ref(false);
-    let validatorText = ref("获取验证码");
-    let loginWay = ref("pwdLogin");
-    let flag = ref(false);
-
-    let reactiveData = reactive({
-      privacyPolicy: {},
-      userPolicy: {},
-      form: {
-        tel: '',
-        password: '',
-        rememberPwd: false,
-        code: '',
-      },
-    });
-
-    const rules = {
-      tel: [{ required: true, length: 11, message: "请填写手机号" }],
-      code: [
-        { required: true, length: 4, message: "请填写验证码", type: "number" },
-      ],
-    };
-
-    // 监听登录状态值的改变
-    watch(
-      () => store.state.loginFlag,
-      (value) => {
-        console.log("login弹窗----store 登录状态值改变了", value);
-        loginStatusFlag.value = <boolean>value;
-      },
-      {
-        deep: true,
-      }
-    );
-    // 监听登录模块的改变(登录、注册)
-    watch(
-      () => store.state.loginModule,
-      (value) => {
-        loginWay.value = value;
-      },
-      { deep: true }
-    );
-
-    // 方法
-    // 登录弹窗关闭事件
-    function closeHandle(): void {
-      reactiveData.form.tel = '';
-      reactiveData.form.password = '';
-      reactiveData.form.rememberPwd = false;
-      reactiveData.form.code = '';
-      console.log("登录弹窗关闭事件");
-      store.commit("SET_LOGIN", false);
-      store.commit("SET_LOGIN_MODULE", "pwdLogin");
-    }
-    // 切换登录、注册
-    function changeLoginWay(way: string):void {
-      reactiveData.form.tel = '';
-      reactiveData.form.password = '';
-      reactiveData.form.rememberPwd = false;
-      reactiveData.form.code = '';
-      store.commit("SET_LOGIN_MODULE", way);
-    }
-
-    return {
-      loginStatusFlag,
-      sendForPwdFlag,
-      forPwdFlag,
-      validatorForPwdText,
-      sendRegisterFlag,
-      registerFlag,
-      validatorRegisterText,
-      sendFlag,
-      loginFlag,
-      validatorText,
-      loginWay,
-      flag,
-      reactiveData,
-      store,
-      ...toRefs(reactiveData),
-      rules,
-
-      // 方法
-      closeHandle,
-      changeLoginWay,
-    };
+    let loginHooks = loginHook();
+    onMounted(() => {});
+    return loginHooks;
   },
 });
 </script>
@@ -627,7 +530,7 @@ export default defineComponent({
               justify-content: center;
               font-size: 14px;
               color: #9d9d9d;
-              margin: 30px 0 20px 0;
+              margin: 20px 0 20px 0;
 
               .gray-line {
                 width: 14px;

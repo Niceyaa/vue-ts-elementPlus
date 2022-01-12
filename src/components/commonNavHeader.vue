@@ -24,7 +24,7 @@
         </div>
 
         <div class="nav-info">
-            <router-link v-if="!store.state.userVipInfo.memberFlag" to="/vip" class="to-vip-icon">
+            <router-link v-if="!store.state.userVipInfo||!store.state.userVipInfo.memberFlag" to="/vip" class="to-vip-icon">
                 <img src="../assets/newIndex/nav_vip@2x.png" alt="">
             </router-link>
             <div v-if="store.state.userInfo.userNick" class="logged-wrapper">
@@ -32,7 +32,7 @@
                 <el-popover
                         popper-class="user-popper-info"
                         placement="bottom-start"
-                        width="340"
+                        width="340px"
                         trigger="hover">
                     <div class="down-content">
                         <div class="down-user-header">
@@ -41,7 +41,7 @@
                                 <div class="username-wrapper">
                                     <div class="user-wrapper">
                                         <div class="username">{{store.state.userInfo.userNick}}</div>
-                                        <img v-if="store.state.userVipInfo.memberFlag" class="isNotVip"
+                                        <img v-if="store.state.userVipInfo&&store.state.userVipInfo.memberFlag" class="isNotVip"
                                              src="../assets/personal2/personal_label_membered@2x.png" alt="开通会员">
                                         <img v-else class="isNotVip"
                                              src="../assets/personal2/personal_label_nonmember@2x.png" alt="未开通会员">
@@ -54,7 +54,7 @@
                         <div class="down-vip-card">
                             <img src="../assets/newIndex/vipCardIcon.png" alt="">
                             <!--判断是否是会员，显示 开通-->
-                            <router-link to="/vip" class="vip-btn">{{store.state.userVipInfo.memberFlag?'续费会员':'开通会员'}}
+                            <router-link to="/vip" class="vip-btn">{{store.state.userVipInfo&&store.state.userVipInfo.memberFlag?'续费会员':'开通会员'}}
                             </router-link>
                         </div>
                         <div class="info-top">
@@ -106,7 +106,7 @@
 <script lang="ts">
     import {ref, reactive, defineComponent} from 'vue'
     import {useRoute,useRouter} from 'vue-router'
-    import {useStore} from 'vuex'
+import store from '../store/index'
 
     export default defineComponent({
         name: 'commonNavHeader',
@@ -115,7 +115,6 @@
             console.log('ctx', ctx)
             const route = useRoute()
             const router = useRouter()
-            const store = useStore()
 
             function goToURL() {
                 router.push({
@@ -176,6 +175,7 @@
 <style lang="less">
     .common-nav-header {
         display: flex;
+        min-width: 1200px;
         justify-content: space-between;
         width: 100%;
         padding: 0 48px;

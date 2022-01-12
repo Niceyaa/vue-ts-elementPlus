@@ -1,38 +1,46 @@
-import {createStore} from 'vuex'
+import { createStore,mapState } from 'vuex'
 import qs from 'qs'
 
-import {setToken, removeToken} from "@/utils/auth";
+import { setToken, removeToken } from "@/utils/auth";
 
-import {loginPwd, loginOut} from '@/api/user'
+import { loginPwd, loginOut, getUserInfo, getUserVipInfo } from '@/api/user'
+import { getIndustryList } from '@/api/commonApi';
 
-const store =  createStore({
-    state: {
-        smdToken: null,
-        userInfo: {},
-        userVipInfo: {},
-        globalLoading: false,
-        //登录弹窗控制标识
-        loginFlag: false,
-        //登录弹窗模块
-        loginModule: 'pwdLogin',
-        //vip标识
-        vipFlag: false,
-        //开始制作标识
-        makeDocFlag: false,
-        //热门标签
-        hotTags: [],
-        //行业标签
-        industryData: [],
-        //底部公共信息
-        btmNavInfo: {},
-        //特色模板、素材
-        specialInfo: {},
+import type {State} from '../type/store.d'
 
-        wpsPage1Url: null,
-        wpsPage1Token: null,
+let state:State = {
+    smdToken: null,
+    userInfo: {
     },
+    userVipInfo: {
+        memberFlag:false
+    },
+    globalLoading: false,
+    //登录弹窗控制标识
+    loginFlag: false,
+    //登录弹窗模块
+    loginModule: 'pwdLogin',
+    //vip标识
+    vipFlag: false,
+    //开始制作标识
+    makeDocFlag: false,
+    //热门标签
+    hotTags: [],
+    //行业标签
+    industryData: [],
+    //底部公共信息
+    btmNavInfo: {},
+    //特色模板、素材
+    specialInfo: {},
+
+    wpsPage1Url: null,
+    wpsPage1Token: null,
+}
+
+const store = createStore({
+    state,
     mutations: {
-        SET_TOKEN: (state, smdToken) => {
+        SET_TOKEN: (state, smdToken:string) => {
             state.smdToken = smdToken
         },
         SET_INFO: (state, userInfo) => {
@@ -41,22 +49,23 @@ const store =  createStore({
         SET_VIP_INFO: (state, userInfo) => {
             state.userVipInfo = userInfo
         },
-        SET_LOADING: (state, flag) => {
+        SET_LOADING: (state, flag:boolean) => {
             state.globalLoading = flag
         },
-        SET_LOGIN: (state, flag) => {
+        SET_LOGIN: (state, flag:boolean) => {
+            console.log('修改登录flag', state, flag)
             state.loginFlag = flag
         },
-        SET_LOGIN_MODULE: (state, module) => {
+        SET_LOGIN_MODULE: (state, module:string) => {
             state.loginModule = module
         },
-        SET_VIP_FLAG: (state, flag) => {
+        SET_VIP_FLAG: (state, flag:boolean) => {
             state.vipFlag = flag
         },
-        SET_MAKE_DOC_FLAG: (state, flag) => {
+        SET_MAKE_DOC_FLAG: (state, flag:boolean) => {
             state.makeDocFlag = flag
         },
-        SET_HOT_TAGS: (state, tags) => {
+        SET_HOT_TAGS: (state, tags:Array<object>) => {
             state.hotTags = tags
         },
         SET_INDUSTRY_DATA: (state, ins) => {
@@ -65,10 +74,10 @@ const store =  createStore({
         SET_BTM_INFO: (state, ins) => {
             state.btmNavInfo = ins
         },
-        SET_WPS_PAGE1_URL: (state, ins) => {
+        SET_WPS_PAGE1_URL: (state, ins:string) => {
             state.wpsPage1Url = ins
         },
-        SET_WPS_PAGE1_TOKEN: (state, ins) => {
+        SET_WPS_PAGE1_TOKEN: (state, ins:string) => {
             state.wpsPage1Token = ins
         },
         SET_SPECIAL_INFO: (state, ins) => {
@@ -80,10 +89,6 @@ const store =  createStore({
           let content = await this.$axios.post('/smartbiddoc-material/api/popularRecommend/apiQueryPopularLabel')
           commit('SET_HOT_TAGS', content.data.result)
         },
-        async getIndustryList({commit}) {
-          const content = await this.$axios.post('/smartbiddoc-material/api/industry/apiQueryIndustryList')
-          commit('SET_INDUSTRY_DATA', content.data.result)
-        },
         async getBtmNavInfo({commit}) {
           const content = await this.$axios.post('/smartbiddoc-pubResource/api/article/apiQueryBottomList')
           commit('SET_BTM_INFO', content.data.result)
@@ -92,8 +97,15 @@ const store =  createStore({
           const content = await this.$axios.post('/smartbiddoc-material/api/popularRecommend/apiQueryPopularTemMat')
           commit('SET_SPECIAL_INFO', content.data.result)
         },*/
-        login({commit}, userInfo) {
-            const {username, password, userType} = userInfo
+        getIndustryList({commit}) {
+            getIndustryList({}).then(res=>{
+                if(res.data.code===200){
+                    commit('SET_INDUSTRY_DATA', res.data.result)
+                }
+            })
+        },
+        login({ commit }, userInfo) {
+            const { username, password, userType } = userInfo
             return new Promise((resolve, reject) => {
                 loginPwd(qs.stringify({
                     username,
@@ -109,33 +121,35 @@ const store =  createStore({
                 })
             })
         },
-        /*async getUserInfo({commit}) {
-          let userInfo = await this.$axios.post('/smartbiddoc-docUser/api/userBase/queryUserBaseInfo')
-          const userInfoData = userInfo.data
-          if (userInfoData.code === 200) {
-            commit("SET_INFO", userInfoData.result.userBaseVO)
-          }
+        getUserInfo({ commit }) {
+            getUserInfo({}).then(res => {
+                if (res.data.code === 200) {
+                    const userInfoData = res.data
+                    commit("SET_INFO", userInfoData.result.userBaseVO)
+                }
+            })
         },
-        async getUserVipInfo({commit}) {
-          let userVipInfo = await this.$axios.post('/smartbiddoc-docUser/api/companyAccount/queryCompanyAccount')
-          const userVipInfoData = userVipInfo.data
-          if (userVipInfoData.code === 200) {
-            commit("SET_VIP_INFO", userVipInfoData.result)
-          }
-        },*/
-        resetToken({commit}) {
+        getUserVipInfo({ commit }) {
+            getUserVipInfo({}).then(res => {
+                if (res.data.code === 200) {
+                    const userVipInfoData = res.data
+                    commit("SET_VIP_INFO", userVipInfoData.result.userBaseVO)
+                }
+            })
+        },
+        resetToken({ commit }) {
             return new Promise<void>(resolve => {
                 commit('SET_TOKEN', '')
                 removeToken()
                 resolve()
             })
         },
-        setToken({commit}, token) {
+        setToken({ commit }, token) {
             console.log(1111)
             commit('SET_TOKEN', token)
             setToken(token)
         },
-        loginOut({commit}) {
+        loginOut({ commit }) {
             return new Promise((resolve, reject) => {
                 loginOut().then(res => {
                     commit('SET_TOKEN', '')
@@ -146,7 +160,7 @@ const store =  createStore({
                 })
             })
         },
-        setWpsPage1Info({commit}, info) {
+        setWpsPage1Info({ commit }, info) {
             console.log('----------------', info)
             commit('SET_WPS_PAGE1_TOKEN', info.token)
             commit('SET_WPS_PAGE1_URL', info.url)

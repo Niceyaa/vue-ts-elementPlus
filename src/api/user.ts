@@ -1,8 +1,6 @@
-
-
 import request from '@/utils/request'
 
-export function loginPwd(data){
+export function loginPwd(data:any){
     return request({
         url: '/smartbiddoc-docUser/api/userBase/userBaseLoginToPwd',
         method: 'post',
@@ -10,7 +8,7 @@ export function loginPwd(data){
     })
 }
 
-export function loginCode(data){
+export function loginCode(data:any){
     return request({
         url: '/smartbiddoc-docUser/api/userBase/userBaseLoginToAuthCode',
         method: 'post',
@@ -18,7 +16,7 @@ export function loginCode(data){
     })
 }
 
-export function register(data){
+export function register(data:any){
     return request({
         url: '/smartbiddoc-docUser/api/userBase/userBaseRegister',
         method: 'post',
@@ -26,7 +24,7 @@ export function register(data){
     })
 }
 
-export function sendCode(data){
+export function sendCode(data:any){
     return request({
         url: '/smartbiddoc-docUser/api/authCode/sendAuthCode',
         method: 'post',
@@ -35,7 +33,7 @@ export function sendCode(data){
 }
 
 
-export function getUserInfo(data){
+export function getUserInfo(data:any){
     return request({
         url: '/smartbiddoc-docUser/api/userBase/queryUserBaseInfo',
         method: 'post',
@@ -43,16 +41,15 @@ export function getUserInfo(data){
     })
 }
 
-export function loginOut(data){
+export function loginOut(){
     return request({
         url: '/smartbiddoc-docUser/api/userBase/loginOut',
         method: 'post',
-        data
     })
 }
 
 //获取用户会员信息
-export function getUserVipInfo(data){
+export function getUserVipInfo(data:any){
     return request({
         url: '/smartbiddoc-docUser/api/companyAccount/queryCompanyAccount',
         method: 'post',
@@ -61,7 +58,7 @@ export function getUserVipInfo(data){
 }
 
 //忘记密码
-export function forgetPwd(data){
+export function forgetPwd(data:any){
     return request({
         url: '/smartbiddoc-docUser/api/userBase/resetPassword',
         method: 'post',
@@ -70,7 +67,7 @@ export function forgetPwd(data){
 }
 
 //我的订单
-export function getMyOrder(data){
+export function getMyOrder(data:any){
     return request({
         url: '/smartbiddoc-docUser/api/companyOrder/apiQueryOrderPage',
         method: 'post',

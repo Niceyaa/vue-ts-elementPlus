@@ -71,7 +71,7 @@ export default function request(arr: axiosData) {
             method: arr.method || 'post',
             timeout: arr.timeout || 15000,
             headers: {
-                'content-type': arr.contentType ? arr.contentType : arr.json ? 'application/json;charset=UTF-8' : 'application/x-www-form-urlencoded;charset=UTF-8'
+                // 'content-type': arr.contentType ? arr.contentType : arr.json ? 'application/json;charset=UTF-8' : 'application/x-www-form-urlencoded;charset=UTF-8'
             },
             params: arr.params || '',
             data: arr.data || '',
@@ -102,7 +102,7 @@ export default function request(arr: axiosData) {
                     type: 'error',
                     duration: 5 * 1000
                 })
-                if (response.data.code === 402 || response.data.code === 401) {
+                if (response.code === 402 || response.code === 401) {
                     // to re-login
                     ElMessageBox.confirm('登录身份已过期，请重新登录', '登录过期', {
                         confirmButtonText: '确定',
@@ -119,7 +119,7 @@ export default function request(arr: axiosData) {
                 // return Promise.reject(new Error(res.message || 'error'))
                 return Promise.reject(new Error(response.message || 'error'))
             } else {
-                return resolve(response)
+                return resolve(res)
             }
         })
     })
