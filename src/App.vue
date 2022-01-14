@@ -3,13 +3,16 @@
         <component :is="Component"></component>
     </router-view>
     <login-com></login-com>
+    <make-doc-dialog></make-doc-dialog>
 </template>
 <script lang="ts">
     import loginCom from './components/loginCom.vue'
+    import makeDocDialog from './components/makeDocDialog.vue'
     import {defineComponent} from 'vue'
     export default defineComponent({
         components: {
-            'login-com':loginCom
+            'login-com':loginCom,
+            'make-doc-dialog':makeDocDialog
         }
     })
 </script>

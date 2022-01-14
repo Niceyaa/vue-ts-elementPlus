@@ -12,6 +12,7 @@ router.beforeEach(async (to, from) => {
     if (token) {
         console.log("路由守卫中的store---------", store)
         let { userInfo, userVipInfo } = store.state
+        store.commit('SET_TOKEN',token)
 
         if (!userInfo.userNick) {
             await store.dispatch('getUserInfo')
@@ -20,6 +21,9 @@ router.beforeEach(async (to, from) => {
 
         if (store.state.industryData.length <= 0) {
             store.dispatch('getIndustryList')
+        }
+        if(store.state.hotTags.length<=0){
+            store.dispatch("getHotTagList")
         }
 
 

@@ -14,12 +14,13 @@ export default function (params?: any | undefined) {
         hotTemplate: [],
         totalTemplate: [], // 全部分类的模板数据
         showTemplateList: [], // 当前显示的模板数据
+        
     })
     let currentIndustryId = ref()
     let functionId = ref(1)
 
-    const commonStateFn = mapState(['industryData', 'userInfo'])
-    const commonState: { [prop: string]: any, industryData?: any } = {}
+    const commonStateFn = mapState(['industryData', 'hotTags'])
+    const commonState: { [prop: string]: any, industryData?: any,hotTags?:any } = {}
     Object.keys(commonStateFn).forEach(fnKey => {
         // 使用mapState直接返回的一个对象
         // 对象包含了选中的函数方法（return industryData userInfo loginFlag）
@@ -31,11 +32,13 @@ export default function (params?: any | undefined) {
 
     watch(() => store.state.industryData, (value) => {
         if (value.length > 0) {
+            console.log("机构数据变化了吗")
             currentIndustryId.value = value[0].industryId
             getTemplateListById(currentIndustryId.value)
         }
     }, {
         deep: true,
+        immediate:true
     })
     console.log('commonState----------------------------------', commonState)
 
@@ -63,6 +66,7 @@ export default function (params?: any | undefined) {
         }
     })
 
+
     // 获取热门模板
     function getHotTemplateList() {
         let prm = {
@@ -70,6 +74,16 @@ export default function (params?: any | undefined) {
         }
         getHotTemplateDate(prm).then(res => {
             homeApiList.hotTemplate = res.data.result
+            /* if (homeApiList.hotTemplate.length > 0) {
+                let temp = homeApiList.hotTemplate.map((item: any[]) => {
+                    if (item.length > 4) {
+                        return item.slice(0, 4)
+                    } else {
+                        return item
+                    }
+                })
+                homeApiList.hotTemplate = temp
+            } */
         })
     }
     // 获取模板列表

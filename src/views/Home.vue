@@ -89,7 +89,7 @@
           <div @click="goToURL" class="search-btn">搜索模板</div>
         </template>
       </el-input>
-      <!-- <div v-if="hotTags.length!==0" class="hot-wrapper">
+      <div v-if="hotTags.length!==0" class="hot-wrapper">
                 <div class="hot-title">
                     <img src="@/assets/newIndex/home_hot@2x.png" alt="">
                     <span>热门推荐：</span>
@@ -97,7 +97,7 @@
                 <router-link class="hot-search-item" v-for="item in hotTags" :key="item.id"
                            :to="'/sysTemplate/1?label='+item.id">{{item.name}}
                 </router-link>
-            </div>-->
+            </div>
     </div>
     <div class="template-lib-show">
             <div class="show-title">大家都在用</div>
@@ -364,10 +364,12 @@ export default defineComponent({
       changeFunction,
       totalTemplate: totalTemplateData,
       currentIndustryId,
+      hotTags
     } = homeApiData();
-    console.log("热门模板", hotTemplateData, showTemplateData, industryData,totalTemplateData);
+    console.log("热门模板", hotTemplateData, industryData,totalTemplateData);
 
     return {
+      hotTags,
       showFlag,
       showTemplateData,
       partnerSrc,

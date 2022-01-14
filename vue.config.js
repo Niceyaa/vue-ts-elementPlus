@@ -26,6 +26,7 @@ module.exports = {
     },
     lintOnSave: false,
     devServer: {
+        port: 88,
         overlay: {
             warnings: true,
             error: true

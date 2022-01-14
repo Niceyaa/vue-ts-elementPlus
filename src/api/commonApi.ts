@@ -63,3 +63,12 @@ export function getBtmInfo(data){
     })
 }
 
+//获取热门标签信息
+export function getHotTags(data){
+    return request({
+        url: '/smartbiddoc-material/api/popularRecommend/apiQueryPopularLabel',
+        method: 'post',
+        data
+    })
+}
+

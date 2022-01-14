@@ -248,4 +248,15 @@ export function deletePageHeaderAndFooterPic(data){
 }
 
 
+//根据招标文件创建标书
+export function createDocByLocalDoc(data){
+    return request({
+        url: '/smartbiddoc-doc/api/bidDoc/createBidDocByBidFile',
+        method: 'post',
+        data
+    })
+}
+
+
+
 

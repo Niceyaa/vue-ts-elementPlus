@@ -4,7 +4,7 @@ import qs from 'qs'
 import { setToken, removeToken } from "@/utils/auth";
 
 import { loginPwd, loginOut, getUserInfo, getUserVipInfo } from '@/api/user'
-import { getIndustryList,getBtmInfo,getSpecialFodderAndTemplate } from '@/api/commonApi';
+import { getIndustryList,getBtmInfo,getSpecialFodderAndTemplate,getHotTags } from '@/api/commonApi';
 
 import type {State} from '../type/store.d'
 
@@ -16,6 +16,8 @@ let state:State = {
         memberFlag:false
     },
     globalLoading: false,
+    // 标书制作弹窗控制
+    makeDialogFlag: false,
     //登录弹窗控制标识
     loginFlag: false,
     //登录弹窗模块
@@ -85,10 +87,10 @@ const store = createStore({
         },
     },
     actions: {
-        /*async getHotTagList({commit}) {
-          let content = await this.$axios.post('/smartbiddoc-material/api/popularRecommend/apiQueryPopularLabel')
+        async getHotTagList({commit}) {
+          let content = await getHotTags({})
           commit('SET_HOT_TAGS', content.data.result)
-        },*/
+        },
         async getBtmNavInfo({commit}) {
           const content = await getBtmInfo({})
           commit('SET_BTM_INFO', content.data.result)

@@ -1,23 +1,23 @@
-export function lcgFormatDate(date, type) {
-    let tt = new Date(date)
+export function lcgFormatDate(date:string, type?:boolean|undefined):string {
+    let tt:Date = new Date(date)
     let y = tt.getFullYear()
-    let mon = (tt.getMonth()+1).toString().padStart(2,0)
-    let dd = tt.getDate().toString().padStart(2,0)
-    let h = tt.getHours().toString().padStart(2,0)
-    let min = tt.getMinutes().toString().padStart(2,0)
-    let s = tt.getSeconds().toString().padStart(2,0)
+    let mon = (tt.getMonth()+1).toString().padStart(2,'0')
+    let dd = tt.getDate().toString().padStart(2,'0')
+    let h = tt.getHours().toString().padStart(2,'0')
+    let min = tt.getMinutes().toString().padStart(2,'0')
+    let s = tt.getSeconds().toString().padStart(2,'0')
     return type?`${y}-${mon}-${dd} ${h}:${min}:${s}`:`${y}-${mon}-${dd}`
 }
 
-export function getDateBeforeDay(day,type){
+export function getDateBeforeDay(day:number,type?:boolean|undefined):string{
     let nowTimestamp = new Date().getTime() - Number(day)*84600000
     let tt = new Date(nowTimestamp)
     let y = tt.getFullYear()
-    let mon = (tt.getMonth()+1).toString().padStart(2,0)
-    let dd = tt.getDate().toString().padStart(2,0)
-    let h = tt.getHours().toString().padStart(2,0)
-    let min = tt.getMinutes().toString().padStart(2,0)
-    let s = tt.getSeconds().toString().padStart(2,0)
+    let mon = (tt.getMonth()+1).toString().padStart(2,"0")
+    let dd = tt.getDate().toString().padStart(2,"0")
+    let h = tt.getHours().toString().padStart(2,"0")
+    let min = tt.getMinutes().toString().padStart(2,"0")
+    let s = tt.getSeconds().toString().padStart(2,"0")
     return type?`${y}-${mon}-${dd} ${h}:${min}:${s}`:`${y}-${mon}-${dd}`
 
 }
@@ -74,7 +74,7 @@ export function returnUploadPrm(fileId, result, fileList) {
     requestData.append('x:companyid', result.companyid)
     requestData.append('x:name', fileList.name)
     requestData.append('key', fileKeySite)
-    requestData.append('secure', true)
+    requestData.append('secure', 'true')
     requestData.append('dir', result.dir)
     requestData.append('host', result.host)
     requestData.append('file', fileList)
