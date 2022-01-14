@@ -1,7 +1,7 @@
-
-interface industryItem {
+export interface industryItem {
     industryId: number,
     industryName: string,
+    subIndustry?: Array<industryItem>,
     [prop: string]: any
 }
 export interface State {

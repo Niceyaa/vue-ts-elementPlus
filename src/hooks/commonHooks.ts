@@ -1,5 +1,6 @@
 import { mapState, useStore } from 'vuex'
 import { computed } from 'vue'
+import { State } from '@popperjs/core'
 // computed mapState 共同使用
 
 
@@ -13,8 +14,17 @@ import { computed } from 'vue'
         ...
     }
 */
-export function returnCompStateFn(prm: any): object {
-    const store = useStore
+// 定义返回值类型
+type StateObj<T> = {
+    [S in keyof T]?:T[S]
+}
+// 定义函数类型
+type StateFn<T> = (prm:[keyof T])=>StateObj<T>
+
+
+
+export function  returnCompStateFn (prm:any[]){
+    const store = useStore()
     const commonStateFn = mapState(prm)
     const commonState: { [prop: string]: any } = {}
     Object.keys(commonStateFn).forEach(fnKey => {

@@ -11,3 +11,10 @@ declare module '*.png' {
 }
 
 declare module 'js-cookie'
+
+declare class TencentCaptcha {
+  constructor(id,cb:(res:any)=>void){
+
+  }
+  show(){}
+}

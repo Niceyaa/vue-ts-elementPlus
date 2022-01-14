@@ -1,6 +1,7 @@
 // 公共组件
 import commonNavHeader from '@/components/commonNavHeader.vue'
 import commonFooter from '@/components/commonFooter.vue'
+import successShow from '@/components/successShow.vue'
 
 type commonItem = {
         name: string,
@@ -15,6 +16,10 @@ const commonComponents:Array<commonItem> = [
     {
         name:'common-footer',
         component: commonFooter
+    },
+    {
+        name:'success-show',
+        component: successShow
     }
 ]
 

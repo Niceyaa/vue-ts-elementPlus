@@ -10,7 +10,7 @@
 </template>
 
 <script>
-    import defaultUrl from '~/assets/personal2/personal_empty@2x.png'
+    import defaultUrl from '@/assets/personal2/personal_empty@2x.png'
     export default {
         name: 'empty-page',
         data() {

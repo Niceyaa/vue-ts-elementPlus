@@ -8,10 +8,15 @@ const routes: Array<RouteRecordRaw> = [
     component: Home
   },
   {
-    path: '/About',
-    name:'About',
-    component: ()=>import('../views/About.vue')
-  }
+    path: '/sysTemplate',
+    name:'sysTemplate',
+    component: ()=>import('../views/sysTemplate/index.vue')
+  },
+  // {
+  //   path: '/sysTemplate/detail/:id',
+  //   name:'sysTemplateDetail',
+  //   component: ()=>import('../views/sysTemplate/detail.vue')
+  // }
 ]
 
 const router = createRouter({

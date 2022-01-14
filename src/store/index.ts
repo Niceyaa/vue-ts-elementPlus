@@ -106,7 +106,8 @@ const store = createStore({
                     if(ins.length>0){
                         ins.unshift({
                             industryId:0,
-                            industryName:'全部分类'
+                            industryName:'全部分类',
+                            subIndustry: []
                         })
                     }
                     commit('SET_INDUSTRY_DATA', ins)
@@ -176,6 +177,7 @@ const store = createStore({
         }
     }
 })
+
 
 export default store
 

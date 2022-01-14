@@ -23,7 +23,7 @@
         arrow="always"
         indicator-position="none"
       >
-        <el-carousel-item v-for="(item, idx) in showTemplateData" :key="idx">
+        <el-carousel-item v-for="(item, idx) in hotTemplateData" :key="idx">
           <div class="banner-inner">
             <div
               :to="'/sysTemplate/detail/' + innerItem.templateId"
@@ -141,7 +141,7 @@
             <!--</div>
 
             <empty-data-page v-else></empty-data-page>-->
-            <router-link class="show-more-template" to="/sysTemplate/1">查看更多模板</router-link>
+            <router-link class="show-more-template" to="/sysTemplate">查看更多模板</router-link>
         </div>
     <div class="special-function">
       <div class="spec-func-inner">
@@ -232,7 +232,7 @@
 
             </div>
         </div>
-    <!--<successShow :show-flag="showFlag">
+    <success-show v-model:show-flag="showFlag">
           <div style="text-align: center">创建成功，可前往
             <router-link :to="editUrl" style="color: #156BFE;text-decoration: none">编辑</router-link>
             或
@@ -241,7 +241,7 @@
             </router-link>
             查看
           </div>
-        </successShow>-->
+        </success-show>
     <common-footer></common-footer>
     <!--<el-backtop></el-backtop>-->
   </div>
@@ -249,7 +249,6 @@
 <script lang="ts">
 // import qs from 'qs'
 // import emptyDataPage from '@/components/emptyDataPage'
-// import successShow from '@/components/successShow'
 import c1 from "../assets/other/c1.png";
 import c2 from "../assets/other/c2.png";
 import c3 from "../assets/other/c3.png";
@@ -276,8 +275,6 @@ import homeApiData from "../hooks/home";
 
 export default defineComponent({
   setup() {
-    let showFlag = ref(false);
-    let editUrl: string;
     let partnerSrc = [
       c01,
       c02,
@@ -295,7 +292,6 @@ export default defineComponent({
       c14,
       c15,
     ];
-    let searchKeyword = ref("");
     let functionData = [
       {
         id: 1,
@@ -360,11 +356,17 @@ export default defineComponent({
       showTemplateList,
       industryData,
       functionId,
-      changeIndustryId,
-      changeFunction,
+      showFlag,
+      editUrl,
+      searchKeyword,
       totalTemplate: totalTemplateData,
       currentIndustryId,
-      hotTags
+      hotTags,
+      openMakeDialog,
+      changeIndustryId,
+      changeFunction,
+      createDocByTemplateIdFn:createDocByTemplateId,
+      goToURL,
     } = homeApiData();
     console.log("热门模板", hotTemplateData, industryData,totalTemplateData);
 
@@ -381,10 +383,14 @@ export default defineComponent({
       functionData,
       commentData,
       functionId,
+      editUrl,
       currentIndustryId,
       sysTempPageSize,
       changeIndustryId,
-      changeFunction
+      changeFunction,
+      createDocByTemplateId,
+      openMakeDialog,
+      goToURL
     };
   },
 });
